@@ -68,32 +68,30 @@ def main():
 		draw_text(current_time_list_str[1],'green',(WINW-105+40,WINH-25))
 		draw_text(':','white',(WINW-105+65,WINH-25))
 		draw_text(current_time_list_str[2],'blue',(WINW-105+80,WINH-25))
-
+		
 		pg.draw.circle(win,(30,30,30),(HALF_W,HALF_H),r+5,5)
 
-		for i in range(12):
-			# draw every hour separator to divide our 
-			# circle into twelve equal parts
-			pg.draw.circle(win,(130,130,130),
-				(HALF_W+(r-5)*math.cos(math.radians(hour_angle*i)),
-				HALF_H+(r-5)*math.sin(math.radians(hour_angle*i))),
-				5,0)
-
 		for i in range(60):
-			# draw every minutes&second separator to divide our 
-			# circle into sixty equal parts
-			x0 = HALF_W+(r-10)*math.cos(math.radians(mins_angle*i))
-			y0 = HALF_H+(r-10)*math.sin(math.radians(mins_angle*i))
-			x1 = HALF_W+r*math.cos(math.radians(mins_angle*i))
-			y1 = HALF_H+r*math.sin(math.radians(mins_angle*i))
 			if (mins_angle*i)%5 != 0:
+				# draw every minutes&second separator to divide our 
+				# circle into sixty equal parts
+				x0 = HALF_W+(r-10)*math.cos(math.radians(mins_angle*i))
+				y0 = HALF_H+(r-10)*math.sin(math.radians(mins_angle*i))
+				x1 = HALF_W+r*math.cos(math.radians(mins_angle*i))
+				y1 = HALF_H+r*math.sin(math.radians(mins_angle*i))
 				pg.draw.line(win,(190,190,190),(x0,y0),(x1,y1),1)
+			else:
+				# draw every hour separator to divide our 
+				# circle into twelve equal parts
+				cx = HALF_W+(r-5)*math.cos(math.radians(hour_angle*i))
+				cy = HALF_H+(r-5)*math.sin(math.radians(hour_angle*i))
+				pg.draw.circle(win,(190,190,190),(cx,cy),5,0)
 
 		# draw the hour clock hand
 		pg.draw.line(win,'red',(HALF_W,HALF_H),
 			(HALF_W+(r-100)*math.cos(hour_theta),
 			 HALF_H+(r-100)*math.sin(hour_theta)),5)
-
+		
 		# draw the minute clock hand
 		pg.draw.line(win,'green',(HALF_W,HALF_H),
 			(HALF_W+(r-40)*math.cos(min_theta),
