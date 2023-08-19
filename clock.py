@@ -25,29 +25,29 @@ def draw_text(info,color,pos):
 
 def main():
 	r = 200
-	done = 0
+	done:bool = 0
 	# main game loop (infinite loop until a condition is met)
 	while not done:
 
 		# main event loop
 		for e in pg.event.get():
 			if e.type in (pg.QUIT,pg.WINDOWCLOSE):
-				done = 1  # exit this loop when the user click the close button
+				done = 1  # exit main while.. loop when the user click the close button
 
 
 		# to get the current time you MUST keep it within the main loop
-		current_time: str = time.strftime('%I:%M:%S')  # format: hour:minutes:second
-		# convert str->list[str] of hour,minutes,second
-		current_time_list_str = current_time.split(':')  
-		# convert every element in the list from str->int using list-comprehension
+		current_time: str = time.strftime('%I:%M:%S')  # format hour:minutes:second
+		# convert str to list[str] of hour,minutes,second 
+		current_time_list_str = current_time.split(':') 
+		# convert every element in the list from str to int using list comprehension
 		current_time_list_int = [int(i) for i in current_time_list_str]
 		# extract/unpacking three elements in the list[int] to variables
 		hour,mins,sec = current_time_list_int
 
 
-		# calculate the angles(deg)
+		# calculate the angle(deg)
 		hour_angle = 360/12
-		# because 1hour=60mins and 1mins=60sec
+		# because 1hour=60mins and 1mins=60sec so they have the same angle
 		mins_angle = sec_angle = hour_angle/5
 
 
@@ -59,9 +59,10 @@ def main():
 		hour_theta = math.radians((hour*hour_angle)-90) 
 
 
-		# first of all, paint the entire screen to a plain color
+		# first of all, clear the entire screen to a plain color
 		win.fill('black')
-		# draw everything BELOW this line
+		
+		# blitzing the current hour text at the bottomright corner of the screen
 		draw_text(current_time_list_str[0],'red',(WINW-105,WINH-25))
 		draw_text(':','white',(WINW-105+25,WINH-25))
 		draw_text(current_time_list_str[1],'green',(WINW-105+40,WINH-25))
@@ -104,6 +105,7 @@ def main():
 			 HALF_H-40*math.sin(sec_theta)), 
 			(HALF_W+(r-5)*math.cos(sec_theta),
 			 HALF_H+(r-5)*math.sin(sec_theta)),3) 
+		
 		# draw a small circle on top of the second clock hand
 		pg.draw.circle(win,'blue',(HALF_W,HALF_H),6,0)
 
